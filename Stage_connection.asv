@@ -1,4 +1,4 @@
-function [device,channelsEnums,jogDirectionEnums,timeout_val]=Stage_connection(sn)
+function [device,channelsEnums,jogDirectionEnums,timeout_val]=Stage_connection(serial_num)
 %both check connection and if not connected then connect to the stage
 
 %check if device is connected
