@@ -90,8 +90,7 @@ function [] = GUI_v3()
                             plotslow(0,0,S.graph2);
                           
                             plotslow(0,0,S.graph4);
-                            Speak('',S.OStatus);      
-             
+                            Speak('',S.OStatus);
                 end;
         
         %% Gaussian / sech pulse 
@@ -110,6 +109,10 @@ function [] = GUI_v3()
         %% Oscilloscope Settings
                 if varargin{1}==S.pb7
                            Oscilloscope_settings(S);
+                end 
+        %% Stage Settings
+                if varargin{1}==S.pb8
+                           Stage_settings(S);
                 end 
             
         end 
