@@ -3,7 +3,12 @@ function [device,channelsEnums,jogDirectionEnums,timeout_val]=Stage_connection(s
 
 %check if device is connected
 
-
+ try 
+       selftest(deviceObj)             %returns an error if not connected if not 
+        
+    catch
+        connect(deviceObj)
+    end 
 
 devCLI = NET.addAssembly('C:\Program Files\Thorlabs\Kinesis\Thorlabs.MotionControl.DeviceManagerCLI.dll');
 genCLI = NET.addAssembly('C:\Program Files\Thorlabs\Kinesis\Thorlabs.MotionControl.GenericMotorCLI.dll');

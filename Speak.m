@@ -1,9 +1,7 @@
-function []=Speak(txt,location)
-if location=='O.Ostatus'
-    size=10
-else 
+function []=Speak(txt,location) 
+    
     size=14
-end
+
         set(location,'String','','LineStyle','none', ...
                             'FontSize',size,'FontName','Comic Sans MS','FitBoxToText','off');
         
