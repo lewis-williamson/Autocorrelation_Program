@@ -31,15 +31,12 @@ function [] = GUI_v3()
 
 
 %% Running Function Start
-        function []=run_Program(varargin)
+        function [device,channelsEnums,jogDirectionEnums,timeout_val]=run_Program(varargin)
         %% Plot Data
         num=0;
         path='';
                 if varargin{1}==S.pb1
-                            plotslow(t,file_0,S.graph1);
-                            plotslow(t,file_1,S.graph2);
-                            plotslow(t,file_2,S.graph3);
-        
+                           device.Jog(channelsEnums.GetValue(0), jogDirectionEnums.GetValue(0), timeout_val);
                 end 
         %%  Run Measurement       
         
@@ -93,9 +90,9 @@ function [] = GUI_v3()
                             Speak('',S.OStatus);
                 end;
         
-        %% Gaussian / sech pulse 
+        %% ??
                 if varargin{1}==S.pb4
-                            O_Structure;
+                            
                 end 
         %%  age of data
                 if varargin{1}==S.pb5
@@ -112,7 +109,7 @@ function [] = GUI_v3()
                 end 
         %% Stage Settings
                 if varargin{1}==S.pb8
-                           Stage_settings(S);
+                         [device,channelsEnums,jogDirectionEnums,timeout_val] = Stage_settings();
                 end 
             
         end 
