@@ -6,10 +6,10 @@ function [groupObj,deviceObj] =O_connection_status
     display(append('connecting to ',deviceObj.Name));
         groupObj=get(deviceObj,'System');
     try 
-       selftest(deviceObj)             %returns an error if not connected if not 
+       selftest(deviceObj);             %returns an error if not connected if not 
         
     catch
-        connect(deviceObj)
+        connect(deviceObj);
     end 
         display('Oscilloscope Connected'); 
     groupObj=get(deviceObj,'System');

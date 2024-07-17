@@ -4,8 +4,8 @@ function []= Oscilloscope_settings(S)
 O = Oscilloscope_Structure;
 
 set([O.pb1,O.pb2,O.pb3,O.pb4,O.pb5],'callback',{@run_Oscilloscope,O});
-Speak('no connection',O.Conntext);
-Speak('this',S.OStatus)
+%Speak('no connection',O.Conntext);
+%Speak('this',S.OStatus)
     function []=run_Oscilloscope(varargin)     
         
         if varargin{1}==O.pb1 
@@ -39,28 +39,26 @@ Speak('this',S.OStatus)
                 end         
         end 
 
-        if varargin{1}==O.pb2              
+        if varargin{1}==O.pb2                                   %button for selecting the timebase
                str2 = get(O.pb2,{'str','value'});
-                Speak('Press "Upload to Oscilloscope"',O.text)
+               Speak('Press "Upload to Oscilloscope"',O.text)
         end 
-         if varargin{1}==O.pb3              
-                Speak('',O.text);
-                Speak('Pressing Button 3 does this',O.text);      
-        end      
-        if varargin{1}==O.pb4 
+
+        if varargin{1}==O.pb3              
+               Speak('',O.text);
+               Speak('Pressing Button 3 does this',O.text);      
+        end     
+
+        if varargin{1}==O.pb4
             str2 = get(O.pb2,{'str','value'});
-            [groupObj,deviceObj] =connection_status
-                 switch str2{1}{str2{2}} 
-                    case 'Timebase 1'
-                        invoke(groupObj, 'loadstate',1) 
-                    case 'Timebase 2'
-                        invoke(groupObj, 'loadstate',2) 
-                    case 'Timebase 3'
-                        invoke(groupObj, 'loadstate',3) 
-                 end
+            str3 = get(O.pb3,{'str','value'});
+            time_state_value=str2{2};
+            delay_state_value=str3{2};
+            O_upload_state(time_state_value,delay_state_value,O)
         end
+
         if varargin{1}==O.pb5  
-                [groupObj,deviceObj] =connection_status;
+                [groupObj,deviceObj] =O_connection_status;
                  str2 = get(O.pb2,{'str','value'});
                 get2 = get(deviceObj.Acquisition(1), 'Timebase');   
                 get3 = get(deviceObj.Acquisition(1), 'State');
@@ -85,7 +83,7 @@ Speak('this',S.OStatus)
                 
 
                 Speak(statusO,O.text);      
-                Speak(statusS,S.OStatus)
+                %Speak(statusS,S.OStatus)
 
         end
         
