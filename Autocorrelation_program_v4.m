@@ -22,7 +22,9 @@ function [] = GUI_v3()
     peakB=[];
     peakC=[];
     %% Setting Frame (global 'S') 
+    
     S = Structure;
+    global S
     num=0;                      %cannot remember what this is for
     path='';                    
     
@@ -31,12 +33,20 @@ function [] = GUI_v3()
 
 
 %% Running Function Start
-        function [device,channelsEnums,jogDirectionEnums,timeout_val]=run_Program(varargin)
+        function []=run_Program(varargin)
+
+global channelsEnums
+global jogDirectionEnums
+global device
+global timeout_val
+
         %% Plot Data
         num=0;
         path='';
                 if varargin{1}==S.pb1
-                           device.Jog(channelsEnums.GetValue(0), jogDirectionEnums.GetValue(0), timeout_val);
+                    device.StartPolling(1000);
+                    timeout_val=600000
+                           device.Jog(channelsEnums.GetValue(0), jogDirectionEnums.GetValue(1), timeout_val);       %jog direction 1=backwards 0=forwards
                 end 
         %%  Run Measurement       
         
@@ -109,7 +119,7 @@ function [] = GUI_v3()
                 end 
         %% Stage Settings
                 if varargin{1}==S.pb8
-                         [device,channelsEnums,jogDirectionEnums,timeout_val] = Stage_settings();
+                          Stage_settings();
                 end 
             
         end 

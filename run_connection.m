@@ -1,5 +1,11 @@
 function [device,channelsEnums,jogDirectionEnums,timeout_val]=run_connection()
 
+
+global channelsEnums
+global jogDirectionEnums
+global device
+global timeout_val
+
 devCLI = NET.addAssembly('C:\Program Files\Thorlabs\Kinesis\Thorlabs.MotionControl.DeviceManagerCLI.dll');
 genCLI = NET.addAssembly('C:\Program Files\Thorlabs\Kinesis\Thorlabs.MotionControl.GenericMotorCLI.dll');
 motCLI = NET.addAssembly('C:\Program Files\Thorlabs\Kinesis\Thorlabs.MotionControl.KCube.InertialMotorCLI.dll');
@@ -32,11 +38,11 @@ pause(1) %wait to make sure device is enabled
 % Pull the Enums needed
 channelsHandle = motCLI.AssemblyHandle.GetType('Thorlabs.MotionControl.KCube.InertialMotorCLI.InertialMotorStatus+MotorChannels');
 
- channelsEnums = channelsHandle.GetEnumValues();
+channelsEnums = channelsHandle.GetEnumValues();
 
 jogDirectionHandle = motCLI.AssemblyHandle.GetType('Thorlabs.MotionControl.KCube.InertialMotorCLI.InertialMotorJogDirection');
- jogDirectionEnums = jogDirectionHandle.GetEnumValues();
-
+jogDirectionEnums = jogDirectionHandle.GetEnumValues();
+jogStepSizeHandle=motCLI.AssemblyHandle.GetType('Thorlabs.MotionControl.KCube.InertialMotorCLI.ISetStepSizeFunction1');
 
 % Zero the actuator
 fprintf("Zero the actuator\n")
@@ -44,10 +50,7 @@ device.SetPositionAs(channelsEnums.GetValue(0), 0);
 
 % Jog the Actuator
 fprintf("Jog the actuator forwards\n")
-device.Jog(channelsEnums.GetValue(0), jogDirectionEnums.GetValue(0), timeout_val);
 
-global channelsEnums
-global jogDirectionEnums
-global device
-global timeout_val
+%device.Jog(channelsEnums.GetValue(0), jogDirectionEnums.GetValue(0), timeout_val);
+
     end

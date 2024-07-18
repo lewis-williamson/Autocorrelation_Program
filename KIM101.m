@@ -19,7 +19,7 @@ motCLI = NET.addAssembly('C:\Program Files\Thorlabs\Kinesis\Thorlabs.MotionContr
 import Thorlabs.MotionControl.DeviceManagerCLI.*
 import Thorlabs.MotionControl.GenericMotorCLI.*
 import Thorlabs.MotionControl.KCube.InertialMotorCLI.*
-
+import Thorlabs.MotionControl.GenericMotorCLI.Settings.JogSettings.*
 %% Create Simulation (Comment out for real device)
 % 
 

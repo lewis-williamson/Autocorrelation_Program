@@ -1,14 +1,11 @@
-function    [device,channelsEnums,jogDirectionEnums,timeout_val]= Stage_settings()
+function    []= Stage_settings()
 
 Ss=Ss_Structure;
 set([Ss.pb1,Ss.pb2,Ss.pb3,Ss.pb4,Ss.pb5],'callback',{@run_stage,Ss});
 n=0;
-device=[];
-channelsEnums=[];
-jogDirectionEnums=[];
-timeout_val=[];
 
-    function [device,channelsEnums,jogDirectionEnums,timeout_val]=run_stage(varargin)
+
+    function []=run_stage(varargin)
         
         serial_num='97101961';
 
@@ -21,7 +18,7 @@ timeout_val=[];
                         case 2
                             if n==0
                                  Speak('connecting',Ss.text)
-                                [device,channelsEnums,jogDirectionEnums,timeout_val]=Stage_connection(serial_num,n);
+                                Stage_connection(serial_num,n);
                                 n=1
                                 Speak('',Ss.text)
                                 Speak('connected',Ss.connection_status)
