@@ -5,11 +5,11 @@
 function [] = GUI_v3() 
     %% import selections for timbase
     format long 
-    k1=1.543;                                           %pulse shape factor Sech^2
-    k2=1.414                                            %de convolution factor for gaussian pulses
-    c=3E8;                                              %speed of light 
-    movement=   6.65967E-5                              %50 steps 'backwards'500s/s 1ksteps/s^2 
-                                                        %movement of the stage between every measurement 
+    k1=1.543;                                           
+    k2=1.414                                            
+    c=3E8;                                              
+    movement=6.65967E-5                              
+                                                         
     close all
     t=[0];
     Age='';
@@ -24,32 +24,31 @@ function [] = GUI_v3()
     %% Setting Frame (global 'S') 
     
     S = Structure;
+    global S
     num=0;                      %cannot remember what this is for
-    path='';                    
+    path='';
     
-    set([S.pb1,S.pb2,S.pb3,S.pb4,S.pb5,S.pb6,S.pb7,S.pb8],'callback',{@run_Program,S});
+    set([S.pb1,S.pb2,S.pb3,S.pb4,S.pb5,S.pb6,S.pb7,S.pb8,S.pb9,S.pb10],'callback',{@run_Program,S});
 
 
 
 %% Running Function Start
         function []=run_Program(varargin)
 
-global channelsEnums
-global jogDirectionEnums
-global device
-global timeout_val
+            global channelsEnums
+            global jogDirectionEnums
+            global device
+            global timeout_val
 
         %% Plot Data
-        num=0;
-        path='';
-                if varargin{1}==S.pb1
-                    device.StartPolling(1000);
-                    timeout_val=600000
-                           device.Jog(channelsEnums.GetValue(0), jogDirectionEnums.GetValue(1), timeout_val);       %jog direction 1=backwards 0=forwards
-                end 
+            num=0;
+            path='';
+                    if varargin{1}==S.pb1
+                        Oscilloscope_settings(S);
+                    end 
         %%  Run Measurement       
         
-        if varargin{1}==S.pb2
+            if varargin{1}==S.pb2
         
                                                                                                                                             [widthA,centerA,rootsA,YfitA]=fwhm(t',file_0);   %width=fwhm in terms of raw data t.
                             [widthB,centerB,rootsB,YfitB]=  fwhm(t',file_1);   %center the peak value position, roots the fwhm points
@@ -99,9 +98,9 @@ global timeout_val
                             Speak('',S.OStatus);
                 end;
         
-        %% ??
+        %% STAGE SETTINGS
                 if varargin{1}==S.pb4
-                            
+                             Stage_settings();
                 end 
         %%  age of data
                 if varargin{1}==S.pb5
@@ -110,16 +109,24 @@ global timeout_val
         %% Help 
                 if varargin{1}==S.pb6
                             ran=round(rand*10);
-                            Speak(Select_Speak(ran),S.Text_for_display);
+                            Speak(Help_Text(ran),S.Text_for_display);
                 end
-        %% Oscilloscope Settings
+        %% RUN BUTTON
                 if varargin{1}==S.pb7
                            Oscilloscope_settings(S);
                 end 
-        %% Stage Settings
+        %% SAVE BUTTON?
                 if varargin{1}==S.pb8
-                          Stage_settings;
+                           
                 end 
             
+                if varargin{1}==S.pb9
+                            Jog(Forward)
+                end 
+
+                if varargin{1}==s.pb10
+                            Jog(Backwards)
+                end 
+               
         end 
 end
