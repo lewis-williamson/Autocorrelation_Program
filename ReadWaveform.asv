@@ -1,0 +1,5 @@
+function [X,Y,XUNIT,YUNIT] = ReadWaveform(channel)
+global deviceObj
+global groupObj=get(deviceObj,'waveform');
+[Y,X,YUNIT,XUNIT] = invoke(groupObj,'readwaveform',channel);
+end

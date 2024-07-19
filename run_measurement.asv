@@ -1,0 +1,13 @@
+function [] =run_measurement()
+global S
+%axes:
+%
+[X1,Y1,XUNIT,YUNIT] = ReadWaveform('channel1');
+Speak('waveform1 acquired',S.Text_for_display)
+plotslow(X1,Y1,S.graph1)
+
+[X2,Y2,XUNIT,YUNIT] = ReadWaveform('channel1');
+Speak('waveform2 acquired',S.Text_for_display)
+plotslow(X2,Y2,S.graph2)
+
+end
