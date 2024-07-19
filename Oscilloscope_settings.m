@@ -28,8 +28,10 @@ set([O.pb1,O.pb2,O.pb3,O.pb4,O.pb5],'callback',{@run_Oscilloscope,O});
                             end
  
                                 % Create a device object. 
-                            
+                                global deviceObj
+                                global groupObj
                                 deviceObj = icdevice('tektronix_tds2024.mdd', interfaceObj);
+                                connect(deviceObj)
                                % Speak('connected to the oscilloscope',O.text)
                                 Speak('connected to Oscilloscope',O.Conntext);
                                 Speak('',O.text)

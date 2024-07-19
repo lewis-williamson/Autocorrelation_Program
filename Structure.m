@@ -63,7 +63,6 @@ S.SStatus=          annotation('Parent',S.fh,'textbox',[0.25 gap status_box_widt
 
 S.graph1=axes('Parent',S.fh,'Position',[0.0602617447277633 0.5265625 0.407915170051092 0.250759904371586]);%Plot raw (1-3)
 S.graph2=axes('Parent',S.fh,'Position',[0.0602617447277633 0.228125 0.407915170051092 0.2375]);
-%S.graph3=axes('Parent',S.fh,'Position',[0.0602617447277633 0.252371916508538 0.407915170051092 0.126468514428511]);
 S.graph4=axes('Parent',S.fh,'Position',[0.508351240560948 0.413194444444444 0.478605281178183 0.267987249544626]); %Result
 
 
