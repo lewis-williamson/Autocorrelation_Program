@@ -19,35 +19,38 @@ S.fh =              figure('units','normalized',...              %create box dim
 %% Geometrics 
 
 
- S.rec_1=annotation('Parent',S.fh,'rectangle',[gap 0.2 rawdatawidth 0.7],'linewidth',2);
+S.rec_1=annotation('Parent',S.fh,'rectangle',[gap 0.2 rawdatawidth 0.7],'linewidth',2);
+S.rec_2=annotation('Parent',S.fh,'rectangle',[gap gap status_box_width 0.14],'linewidth',2);
+S.rec_3=annotation('Parent',S.fh,'rectangle',[0.25 gap status_box_width 0.14],'linewidth',2);
 
 %% headers
 
 S.raw_text_header=  annotation('Parent',S.fh,'textbox',[gap rawboxheight rawdatawidth box_height],...%raw data
-                        'String',{'Raw Data'},'linewidth',2,'HorizontalAlignment','center','VerticalAlignment','middle','FontSize',30,'FitBoxToText','off','BackgroundColor','#fdad00');
+                        'String',{'Raw Data'},'linewidth',2,'HorizontalAlignment','center',...
+                        'VerticalAlignment','middle','FontSize',30,'FitBoxToText','off','BackgroundColor','#fdad00');
 
-S.Text_Header=      annotation('Parent',S.fh,'textbox',[gap 0.91 0.98 box_height],'String',['Pulse Duration Measurement'],'linewidth',3,... %title
-                        'HorizontalAlignment','center','VerticalAlignment','middle','FontSize',30,'FitBoxToText','off','BackgroundColor','#fdad00');
+S.Text_Header=      annotation('Parent',S.fh,'textbox',[gap 0.91 0.98 box_height],...
+                        'String',['Pulse Duration Measurement'],'linewidth',3,'HorizontalAlignment'...
+                        ,'center','VerticalAlignment','middle','FontSize',30,'FitBoxToText','off','BackgroundColor','#fdad00');
 
 S.OStatus_header=   annotation('Parent',S.fh,'textbox',...                                         %
                         [gap 0.15 status_box_width 0.04],'linewidth',2,... %oscilloscope status title
-                        'HorizontalAlignment','center','VerticalAlignment','middle','string',{'Oscilloscope Status'},'FontSize',14,'FitBoxToText','off','BackgroundColor','#fdad00');
+                        'HorizontalAlignment','center','VerticalAlignment','middle',...
+                        'string',{'Oscilloscope Status'},'FontSize',14,'FitBoxToText','off','BackgroundColor','#fdad00');
 
-S.SStatus_header=   annotation('Parent',S.fh,'textbox',...                                         %
-                        [0.25 0.15 status_box_width 0.04],'linewidth',2,... %stage status tile
-                        'HorizontalAlignment','center','VerticalAlignment','middle','string',{'Stage Status'},'FontSize',14,'FitBoxToText','off','BackgroundColor','#fdad00');
+S.SStatus_header=   annotation('Parent',S.fh,'textbox', [0.25 0.15 status_box_width 0.04], ...
+                        'linewidth',2,'HorizontalAlignment','center','VerticalAlignment'...
+                        ,'middle','string',{'Stage Status'},'FontSize',14,'FitBoxToText','off','BackgroundColor','#fdad00');
 
 %% Active Text Boxes
-S.Text_for_display= annotation('Parent',S.fh,'textbox',...                                       %clippy's speech 
-                        [0.500755381768377 0.109375 0.34206640040984 0.224838576876407],...
-                        'String','','LineStyle','none', ...
-                        'FontSize',14,'FontName','Comic Sans MS','FitBoxToText','off');
+S.Clippy=           annotation('Parent',S.fh,'textbox',[0.50 0.11 0.34 0.22],...%clippy speech
+                        'String','','LineStyle','none','FontSize',14,'FontName','Comic Sans MS','FitBoxToText','off');
 
-S.OStatus=          annotation('Parent',S.fh,'textbox',[gap gap status_box_width 0.14],'linewidth',2,...
-                        'HorizontalAlignment','center','FontSize',20,'FitBoxToText','off');
+S.OStatus=          annotation('Parent',S.fh,'textbox',[gap gap status_box_width 0.14],...
+                    'HorizontalAlignment','center','FontSize',20,'FitBoxToText','off');
 
-S.SStatus=          annotation('Parent',S.fh,'textbox',[0.25 gap status_box_width 0.14],'linewidth',2,...
-                        'HorizontalAlignment','center','VerticalAlignment','middle','FontSize',12,'FitBoxToText','off');
+S.SStatus=          annotation('Parent',S.fh,'textbox',[0.25 gap status_box_width 0.14],...
+                    'HorizontalAlignment','center','FontSize',12,'FitBoxToText','off');
 
 
 %% Images 

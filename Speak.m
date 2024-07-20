@@ -1,6 +1,6 @@
 function []=Speak(txt,location) 
 
- set(location,'String','','LineStyle','none','FontName','Comic Sans MS','FitBoxToText','off');
+ set(location,'String','','FontName','Comic Sans MS','FitBoxToText','off');
         
                     len=length(txt);
                     for i=1:len;

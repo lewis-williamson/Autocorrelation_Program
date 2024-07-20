@@ -34,7 +34,7 @@ function [] = GUI_v3()
             num=0;
             path='';
                     if varargin{1}==S.pb1
-                        Oscilloscope_settings(S);
+                        Oscilloscope_settings();
                     end 
         %%  Run Measurement       
         

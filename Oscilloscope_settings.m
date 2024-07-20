@@ -1,4 +1,4 @@
-function []= Oscilloscope_settings(S)
+function []= Oscilloscope_settings()
 
 %this function will configure the actual connection with the oscilloscope, call on the structure and control the ability of the O.GUI
 O = Oscilloscope_Structure;
@@ -7,7 +7,7 @@ set([O.pb1,O.pb2,O.pb3,O.pb4,O.pb5],'callback',{@run_Oscilloscope,O});
 %Speak('no connection',O.Conntext);
 %Speak('this',S.OStatus)
     function []=run_Oscilloscope(varargin)     
-        
+        global S
         if varargin{1}==O.pb1 
                 str = get(O.pb1,{'str','value'});
                 
@@ -34,6 +34,7 @@ set([O.pb1,O.pb2,O.pb3,O.pb4,O.pb5],'callback',{@run_Oscilloscope,O});
                                 connect(deviceObj)
                                % Speak('connected to the oscilloscope',O.text)
                                 Speak('connected to Oscilloscope',O.Conntext);
+                                Speak('connected',S.OStatus)
                                 Speak('',O.text)
                     case 'Select Oscilloscope'
                         Speak('This is not an option',O.text)
@@ -43,12 +44,12 @@ set([O.pb1,O.pb2,O.pb3,O.pb4,O.pb5],'callback',{@run_Oscilloscope,O});
 
         if varargin{1}==O.pb2                                   %button for selecting the timebase
                str2 = get(O.pb2,{'str','value'});
-               Speak('Press "Upload to Oscilloscope"',O.text)
+               Speak('Press "Once selected Delay + Timebase, Upload to Oscilloscope"',O.text)
         end 
 
         if varargin{1}==O.pb3              
                Speak('',O.text);
-               Speak('Pressing Button 3 does this',O.text);      
+               Speak('Press "Once selected Delay + Timebase, Upload to Oscilloscope"',O.text)
         end     
 
         if varargin{1}==O.pb4
