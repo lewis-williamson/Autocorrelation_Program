@@ -16,8 +16,11 @@ axes(location)
                     ymin=min(y);
                     ymax=max(y);
                     plot(x,y);
+                    if length(y)>=2
                     xlim([xmin xmax]);
                     ylim([ymin ymax]);
+                    else 
+                    end
                 % end 
             % end     
 

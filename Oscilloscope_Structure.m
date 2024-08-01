@@ -8,7 +8,7 @@ function O = Structure
     end
 
 %% structure
-O.fh = figure('units','normalized','position',[0.5 0.2 0.2 0.5]...
+O.fh = figure('units','normalized','position',[0.7 0.7 0.2 0.5]...
                     ,'name','Oscilloscope Settings',...
                     'numbertitle','off');      
 %Buttons
@@ -35,8 +35,6 @@ O.pb5=uicontrol('Parent',O.fh,'Style','pushbutton','String', 'Show Current Setti
 textboxPosition = [0.05 0.32 0.9 0.57];
 textboxConnection_status=[0.05 0.9 0.9 0.07];
 
-O.rec1=annotation('Parent',O.fh,'rectangle',textboxPosition,'LineWidth',3);
-O.text=annotation('Parent',O.fh,'textbox',textboxPosition);
-O.Conntext=annotation('Parent',O.fh,'textbox',textboxConnection_status);
-%'LineStyle','none'
+O.text=annotation('Parent',O.fh,'textbox',textboxPosition,'LineWidth',3);
+O.Conntext=annotation('Parent',O.fh,'textbox',textboxConnection_status,'LineStyle','none');
 end 

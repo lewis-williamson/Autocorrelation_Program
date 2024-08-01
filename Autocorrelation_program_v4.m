@@ -80,7 +80,7 @@ function [] = GUI_v3()
         
         %% reset 
                 if varargin{1}==S.pb3;
-                            Speak('',S.Text_for_display);
+                            Speak('',S.Clippy);
                             plotslow(0,0,S.graph1);
                             plotslow(0,0,S.graph2);
                           
@@ -94,12 +94,12 @@ function [] = GUI_v3()
                 end 
         %%  age of data
                 if varargin{1}==S.pb5
-                            Speak(Age,S.Text_for_display);
+                            Speak(Age,S.Clippy);
                 end  
         %% Help 
                 if varargin{1}==S.pb6
                             ran=round(rand*10);
-                            Speak(Help_Text(ran),S.Text_for_display);
+                            Speak(Help_Text(ran),S.Clippy);
                 end
         %% RUN BUTTON
                 if varargin{1}==S.pb7
