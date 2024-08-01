@@ -39,9 +39,8 @@ function [] = GUI_v3()
         %%  Run Measurement       
         
             if varargin{1}==S.pb2
-        
-                                                                                                                                            [widthA,centerA,rootsA,YfitA]=fwhm(t',file_0);   %width=fwhm in terms of raw data t.
-                            % [widthB,centerB,rootsB,YfitB]=  fwhm(t',file_1);   %center the peak value position, roots the fwhm points
+        run_measurement;
+                                                                                                                                          %             % [widthB,centerB,rootsB,YfitB]=  fwhm(t',file_1);   %center the peak value position, roots the fwhm points
                             % [widthC,centerC,rootsC,YfitC]=  fwhm(t',file_2);   %fit the gaussian fit 
                             % 
                             % difference_t=                   abs(t(centerA)-t(centerC));         %time difference between the two centeres 
