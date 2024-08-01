@@ -1,5 +1,5 @@
-function [FWHM,fit]=fwhmsec(x_data,y_data)
-%[width, center, roots, Yfit]
+function [FWHM,center_x,fit]=fwhmsec(x_data,y_data)
+
 sech2_model = @(params, x) params(1) * sech(params(2) * (x - params(3))).^2 + params(4);
 
 % Initial guess for the parameters [amplitude, scale, center]
@@ -13,7 +13,7 @@ ub = [Inf, Inf, max(x_data), Inf]; % Upper bounds [amplitude, scale, center, off
 options = optimoptions('lsqcurvefit', 'Display', 'iter', 'MaxIterations', 10000);
 [params_fit, resnorm, residual, exitflag, output] = lsqcurvefit(sech2_model, initial_guess, x_data,abs(y_data), lb, ub, options);
 
-fit=sech2_model(params_fit, x_data)
+fit=sech2_model(params_fit, x_data);
 
 % Display the fitted parameters
 disp('Fitted parameters:');
@@ -41,17 +41,24 @@ disp(['FWHM: ', num2str(fwhm)]);
 
 FWHM = 2 * log(sqrt(2) + 1) / params_fit(2);
 disp(FWHM);
+
+%% find max value and center point of fit 
+
+[center_y,loc]=max(fit);
+center_x=x_data(loc);
+
 %% plot results
 
 % Plot the original data and the fitted curve
 figure;
 hold on;
-scatter(x_data, abs(y_data), 'bo'); % Original data
+%scatter(x_data, abs(y_data), 'bo'); % Original data
 plot(x_data, fit, 'r-', 'LineWidth', 2); % Fitted curve
+scatter(center_x,center_y);
 title('Data Fitting using sech^2 Function');
 xlabel('x');
 ylabel('y');
-legend1=['Params FWHM = ' num2str(FWHM, '%.2f')]
+legend1=['Params FWHM = ' num2str(FWHM, '%.2f')];
 legend(legend1,['Analytical FWHM = ' num2str(fwhm, '%.2f')],legend1);
 
 hold off;
