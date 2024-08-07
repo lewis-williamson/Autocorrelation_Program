@@ -2,8 +2,8 @@ function [FWHM,center_x,center_y,fit]=fwhm(x_data,y_data)
 
 [value location]=max(y_data)
 
-Y=y_data(location-400:location+400)
-X=x_data(location-400:location+400)
+Y=y_data(location-200:location+200)
+X=x_data(location-200:location+200)
 
 % Define the sech^2 function to fit with additional scaling parameter
 sech2_model = @(params, x) params(1) * sech(params(2) * (x - params(3))).^2 + params(4);
@@ -61,17 +61,17 @@ center_x=x_data(loc);
 %% plot results
 
 %Plot the original data and the fitted curve
-figure;
-hold on;
-scatter(x_data, abs(y_data), 'bo'); % Original data
-plot(x_data, fit, 'r-', 'LineWidth', 2); % Fitted curve
-scatter(center_x,center_y);
-title('Data Fitting using sech^2 Function');
-xlabel('x');
-ylabel('y');
-legend1=['Params FWHM = ' num2str(FWHM, '%.2f')];
-legend(legend1,['Analytical FWHM = ' num2str(fwhm, '%.2f')],legend1);
+% figure;
+% hold on;
+% scatter(x_data, abs(y_data), 'bo'); % Original data
+% plot(x_data, fit, 'r-', 'LineWidth', 2); % Fitted curve
+% scatter(center_x,center_y);
+% title('Data Fitting using sech^2 Function');
+% xlabel('x');
+% ylabel('y');
+% legend1=['Params FWHM = ' num2str(FWHM, '%.2f')];
+% legend(legend1,['Analytical FWHM = ' num2str(fwhm, '%.2f')],legend1);
 
-hold off;
+% hold off;
 
 end 

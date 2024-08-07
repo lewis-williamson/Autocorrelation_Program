@@ -15,7 +15,7 @@ function [] = GUI_v3()
 
     global S;
 
-    S = Structure
+    S = Structure;
      
     
     set([S.pb1,S.pb2,S.pb3,S.pb4,S.pb5,S.pb6,S.pb7,S.pb8,S.pb9,S.pb10],'callback',{@run_Program,S});
@@ -40,7 +40,12 @@ function [] = GUI_v3()
         
             if varargin{1}==S.pb2
         run_measurement;
+
                                                                                                                                           %             % [widthB,centerB,rootsB,YfitB]=  fwhm(t',file_1);   %center the peak value position, roots the fwhm points
+
+                           % [widthA,centerA,rootsA,YfitA]=fwhm(t',file_0);   %width=fwhm in terms of raw data t.
+                            % [widthB,centerB,rootsB,YfitB]=  fwhm(t',file_1);   %center the peak value position, roots the fwhm points
+
                             % [widthC,centerC,rootsC,YfitC]=  fwhm(t',file_2);   %fit the gaussian fit 
                             % 
                             % difference_t=                   abs(t(centerA)-t(centerC));         %time difference between the two centeres 
@@ -110,7 +115,7 @@ function [] = GUI_v3()
                 end 
             
                 if varargin{1}==S.pb9
-                            Jog('Forward');
+                            Jog('Forwards');
                 end 
 
                 if varargin{1}==S.pb10

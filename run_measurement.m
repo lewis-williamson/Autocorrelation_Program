@@ -1,44 +1,50 @@
 function [] =run_measurement()
+%function takes two measurment and uses the slow axis (backwards) to
+%actuate the stage movement (twice) between the measurements the stage
+%position is then reset using the forward direction
+
 global S
 cla(S.graph1)
 cla(S.graph2)
+
+global center_x_1
+global center_x_2
+global width1
+global width2
+
 [X1,Y1] = ReadWaveform('channel1');
 [width1, center_x_1,center_y_1, Yfit1]=fwhm(X1,Y1);
 Speak('waveform 1 acquired',S.Clippy);
 axes(S.graph1);
 plot(X1,Y1)%,S.graph1)
-hold(S.graph1,'on')
+hold(S.graph1,'on');
 scatter( center_x_1,center_y_1);
-plot(X1,Yfit1)
+plot(X1,Yfit1);
 
-% if j==0                                                 %J is some quantification of where the pulse is and 
-%                                                         % determines if the stage needs to be moved backwards or forwards
-%         Jog('Backwards')
-%     elseif j==1
-%         Jog('Forwards')
-% end
+pause(1)
 
-%[X2, Y2, width2, center2, Yfit2]=measure_again;     %take a second measurement after moving the stage
-    
+Jog('Backwards');
+Jog('Backwards');
+
 [X2,Y2] = ReadWaveform('channel1');
 [width2, center_x_2,center_y_2, Yfit2]=fwhm(X2,Y2);
 Speak('waveform 2 acquired',S.Clippy);
 axes(S.graph2);
-hold(S.graph2,'on')
-plot(X2,Y2)%,S.graph1);
+plot(X2,Y2);
+hold(S.graph2,'on');
 scatter( center_x_2,center_y_2);
+plot(X1,Yfit2);
+disp(width2)
+disp(append('fucking hell',num2str(width1)))
+pause(1)
 
-% if abs(center2-center1)<Condition
-%     if j==0
-%         Jog('Backwards')
-%     elseif j==1
-%         Jog('forwards')
-%     end
+calculations(center_x_1,center_x_2,width1,width2);
 
-%     [X2, Y2, width2, center2, Yfit2]=measure_again
-% 
-% else 
-% end 
+Jog('Forwards');
+
+disp(append('fucking hell',num2str(abs(center_x_1-center_x_2))))
+
+
 end 
     
 function [X2,Y2, width2, center2, roots2, Yfit2]=measure_again()
