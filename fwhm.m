@@ -1,23 +1,28 @@
-function [FWHM,center_x,center_y,fit]=fwhmsec(x_data,y_data)
+function [FWHM,center_x,center_y,fit]=fwhm(x_data,y_data)
+
+[value location]=max(y_data)
+
+Y=y_data(location-400:location+400)
+X=x_data(location-400:location+400)
 
 % Define the sech^2 function to fit with additional scaling parameter
 sech2_model = @(params, x) params(1) * sech(params(2) * (x - params(3))).^2 + params(4);
 
 % Initial guess for the parameters [amplitude, scale, center, offset]
-amplitude_guess = max(y_data) - min(y_data); 
+amplitude_guess = max(Y) - min(Y); 
 scale_guess = 1;
-center_guess = mean(x_data); 
-offset_guess = min(y_data); 
+center_guess = mean(X); 
+offset_guess = min(Y); 
 
 initial_guess = [amplitude_guess, scale_guess, center_guess, offset_guess];
 
 % Set bounds for the parameters
-lb = [0, 0, min(x_data), -Inf]; % Lower bounds [amplitude, scale, center, offset]
-ub = [Inf, Inf, max(x_data), Inf]; % Upper bounds [amplitude, scale, center, offset]
+lb = [0, 0, min(X), -Inf]; % Lower bounds [amplitude, scale, center, offset]
+ub = [Inf, Inf, max(X), Inf]; % Upper bounds [amplitude, scale, center, offset]
 
 % Perform the curve fitting using lsqcurvefit
 options = optimoptions('lsqcurvefit', 'Display', 'iter', 'MaxIterations', 1000, 'TolFun', 1e-9, 'TolX', 1e-9);
-params_fit = lsqcurvefit(sech2_model, initial_guess, x_data, y_data, lb, ub, options);
+params_fit = lsqcurvefit(sech2_model, initial_guess, X, Y, lb, ub, options);
 
 
 % Display the fitted parameters
