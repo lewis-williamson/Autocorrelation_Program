@@ -1,77 +1,60 @@
-function [FWHM,center_x,center_y,fit]=fwhm(x_data,y_data)
+function [FWHM,center_x,center_y,fit]=fwhm(x_data,y_data);
+% Find the x and y values of the maximum peak in the data
+[max_y, idx] = max(y_data);
+max_x = x_data(idx);
 
-[value location]=max(y_data)
-
-Y=y_data(location-200:location+200)
-X=x_data(location-200:location+200)
-
-% Define the sech^2 function to fit with additional scaling parameter
+% Define the sech^2 function to fit
 sech2_model = @(params, x) params(1) * sech(params(2) * (x - params(3))).^2 + params(4);
 
-% Initial guess for the parameters [amplitude, scale, center, offset]
-amplitude_guess = max(Y) - min(Y); 
-scale_guess = 1;
-center_guess = mean(X); 
-offset_guess = min(Y); 
+% Enhanced initial guesses [amplitude, scale, center, offset]
+baseline_guess = min(y_data);
+amplitude_guess = max_y - baseline_guess;
+width_guess = 1 / (range(x_data));  % Rough estimate for width
+center_guess = max_x; % Start guess at the peak of the data
 
-initial_guess = [amplitude_guess, scale_guess, center_guess, offset_guess];
+initial_guess = [amplitude_guess, width_guess, center_guess, baseline_guess];
 
 % Set bounds for the parameters
-lb = [0, 0, min(X), -Inf]; % Lower bounds [amplitude, scale, center, offset]
-ub = [Inf, Inf, max(X), Inf]; % Upper bounds [amplitude, scale, center, offset]
+lb = [0, 0, min(x_data), -Inf]; % Lower bounds [amplitude, scale, center, offset]
+ub = [Inf, Inf, max(x_data), Inf]; % Upper bounds [amplitude, scale, center, offset]
 
-% Perform the curve fitting using lsqcurvefit
-options = optimoptions('lsqcurvefit', 'Display', 'iter', 'MaxIterations', 1000, 'TolFun', 1e-9, 'TolX', 1e-9);
-params_fit = lsqcurvefit(sech2_model, initial_guess, X, Y, lb, ub, options);
+% Objective function to minimize: sum of squared differences
+objective_func = @(params) sum((sech2_model(params, x_data) - y_data).^2);
 
+% Constraint function: center should be equal to max_x
+nonlcon = @(params) deal([], params(3) - max_x);
+
+% Perform the curve fitting using fmincon with the constraint
+options = optimoptions('fmincon', 'Display', 'iter', 'MaxIterations', 2000, 'TolFun', 1e-12, 'TolX', 1e-12);
+params_fit = fmincon(objective_func, initial_guess, [], [], [], [], lb, ub, nonlcon, options);
 
 % Display the fitted parameters
 disp('Fitted parameters:');
 disp(params_fit);
 
+% Calculate the FWHM from the fit parameters
+B = params_fit(2);
+FWHM = 2 * log(sqrt(2) + 1) / B;
+disp(['FWHM: ', num2str(FWHM)]);
+
+% Calculate the fitted curve
+fitted_curve = sech2_model(params_fit, x_data);
+
 fit=sech2_model(params_fit, x_data);
-
-%% Analytical FWHM calculation
-half_max = (max(fit) + params_fit(4))/2;
-
-% Find the indices where the fitted curve crosses the half-maximum value
-above_half_max = fit > half_max;
-cross_points = diff(above_half_max);
-
-% Find the x-values of the crossings
-x_cross1 = x_data(find(cross_points, 1, 'first'));
-x_cross2 = x_data(find(cross_points, 1, 'last'));
-
-% Calculate the FWHM
-fwhm = x_cross2 - x_cross1;
-
-% Display the FWHM
-disp(['FWHM: ', num2str(fwhm)]);
-
-%% params fit fwhm
-
-FWHM = 2 * log(sqrt(2) + 1) / params_fit(2);
-disp(FWHM);
-
-%% find max value and center point of fit 
-
 [center_y,loc]=max(fit);
 center_x=x_data(loc);
 
-%% plot results
 
-%Plot the original data and the fitted curve
+% Plot the original data and the fitted curve
 % figure;
 % hold on;
-% scatter(x_data, abs(y_data), 'bo'); % Original data
-% plot(x_data, fit, 'r-', 'LineWidth', 2); % Fitted curve
-% scatter(center_x,center_y);
-% title('Data Fitting using sech^2 Function');
-% xlabel('x');
-% ylabel('y');
-% legend1=['Params FWHM = ' num2str(FWHM, '%.2f')];
-% legend(legend1,['Analytical FWHM = ' num2str(fwhm, '%.2f')],legend1);
+% scatter(x_data, y_data, 'bo'); % Original data
+% plot(x_data, fitted_curve, 'r-', 'LineWidth', 2); % Fitted curve
+% title('Data Fitting using sech^2 Function with Peak Alignment');
+% xlabel('Time (s)');
+% ylabel('Voltage (V)');
 
+% Add FWHM to the legend
+% legend('Data', ['Fitted curve (FWHM = ' num2str(FWHM, '%.2f') 's)']);
 % hold off;
-
-end 
+end

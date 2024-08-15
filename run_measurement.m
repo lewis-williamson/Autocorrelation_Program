@@ -38,7 +38,7 @@ disp(width2)
 disp(append('fucking hell',num2str(width1)))
 pause(1)
 
-calculations(center_x_1,center_x_2,width1,width2);
+calculations(center_x_1,center_x_2,width1,width2,'print');
 
 Jog('Forwards');
 
